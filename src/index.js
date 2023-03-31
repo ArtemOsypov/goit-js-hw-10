@@ -10,11 +10,11 @@ const refs = {
   countryInfo: document.querySelector('.country-info'),
 };
 
-refs.inputForm.addEventListener('input', debounce(onInputForm, 300));
+refs.inputForm.addEventListener('input', debounce(onInputForm, DEBOUNCE_DELAY));
 
 function onInputForm(e) {
   e.preventDefault();
-  let inputData = e.target.value;
+  let inputData = e.target.value.trim();
   console.log(inputData);
   fetchCountries(inputData);
 }
