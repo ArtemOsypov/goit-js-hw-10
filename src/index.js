@@ -27,7 +27,6 @@ function onInputForm(e) {
   let countryName = e.target.value.trim();
   console.log(countryName);
   fetchCountries(countryName);
-  console.log(fetchCountries(countryName));
   //   .then(data => {
   //   console.log(data);
   // });
@@ -37,13 +36,34 @@ function onInputForm(e) {
 function fetchCountries(name) {
   fetch(
     `https://restcountries.com/v3.1/name/${name}?fields=name,capital,population,flags,languages`
-  ).then(response => {
-    console.log(fetchCountries());
-    if (!response.status === 404) {
-      Promise.reject(new Error());
-      console.log('Такой страни не існує');
-    }
-    console.log(response.json());
-    return response.json();
-  });
+  )
+    .then(response => {
+      if (response.status === 404) {
+        Notiflix.Notify.failure('Qui timide rogat docet negare');
+        return Promise.reject(error());
+      }
+      return response.json();
+    })
+    .then(countryName => {
+      console.log(countryName);
+    })
+    .catch(error());
+}
+
+// function fetchCountries(name) {
+//   fetch(
+//     `https://restcountries.com/v3.1/name/${name}?fields=name,capital,population,flags,languages`
+//   ).then(response => {
+//     console.log(fetchCountries());
+//     if (response.status === 404) {
+//       Promise.reject(new Error());
+//       console.log('Такой страни не існує');
+//     }
+//     console.log(response.json());
+//     return response.json();
+//   });
+// }
+
+function error() {
+  Notiflix.Notify.failure(`Oops, there is no country with that name`);
 }
