@@ -15,7 +15,7 @@ refs.inputForm.addEventListener('input', debounce(onInputForm, DEBOUNCE_DELAY));
 function onInputForm(e) {
   e.preventDefault();
   let countryName = e.target.value.trim();
-  console.log(countryName);
+  // console.log(countryName);
   fetchCountries(countryName)
     .then(data => {
       if (data.length > 10) {
@@ -25,11 +25,11 @@ function onInputForm(e) {
         );
         return;
       }
-      console.log('render HTLM code');
+      // console.log('render HTLM code');
       renderTemplate(data);
     })
     .catch(error => {
-      console.log('clear Form');
+      // console.log('clear Form');
       clearTemplate();
       Notiflix.Notify.failure(`Oops, there is no country with that name`);
     });
