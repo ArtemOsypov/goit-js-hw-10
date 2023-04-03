@@ -12,25 +12,21 @@ const refs = {
 
 refs.inputForm.addEventListener('input', debounce(onInputForm, DEBOUNCE_DELAY));
 
-// fetch(
-//   'https://restcountries.com/v3.1/name/sweden?fullText=true&fields=name.official,capital,population,flags.svg,languages'
-// )
-//   .then(response => {
-//     return response.json();
-//   })
-//   .then(country => {
-//     console.log(country);
-//   });
-
 function onInputForm(e) {
   e.preventDefault();
   let countryName = e.target.value.trim();
   console.log(countryName);
   fetchCountries(countryName);
-  //   .then(data => {
-  //   console.log(data);
+  // .then(data => {
+  //   if (data.length > 10) {
+  //     console.log('more then 10 countries');
+  //   }
+  //   console.log('render HTLM code');
+  // })
+  // .catch(error => {
+  //   console.log('clear Form');
   // });
-  // console.log(fetchCountries(countryName));
+  console.log(fetchCountries(countryName));
 }
 
 function fetchCountries(name) {
@@ -39,30 +35,17 @@ function fetchCountries(name) {
   )
     .then(response => {
       if (response.status === 404) {
-        Notiflix.Notify.failure('Qui timide rogat docet negare');
-        return Promise.reject(error());
+        return Promise.reject();
       }
+      // console.log(response.json());
       return response.json();
     })
-    .then(countryName => {
-      console.log(countryName);
+    .then(country => {
+      console.log(country);
+      return;
     })
-    .catch(error());
+    .catch(error);
 }
-
-// function fetchCountries(name) {
-//   fetch(
-//     `https://restcountries.com/v3.1/name/${name}?fields=name,capital,population,flags,languages`
-//   ).then(response => {
-//     console.log(fetchCountries());
-//     if (response.status === 404) {
-//       Promise.reject(new Error());
-//       console.log('Такой страни не існує');
-//     }
-//     console.log(response.json());
-//     return response.json();
-//   });
-// }
 
 function error() {
   Notiflix.Notify.failure(`Oops, there is no country with that name`);
